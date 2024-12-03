@@ -1,6 +1,6 @@
 import socket
 import threading
-import json
+import json  # Secure deserialization
 
 def handle_client(client_socket):
     while True:
@@ -8,7 +8,7 @@ def handle_client(client_socket):
             data = client_socket.recv(1024).decode()
             if not data:
                 break
-            task = eval(data)  # Deserialize task (simplistic approach, use JSON in production)
+            task = json.loads(data)  # Safe deserialization
             user_id = task["user_id"]
             task_data = task["task"]
 
@@ -24,9 +24,9 @@ def handle_client(client_socket):
             break
 
 def send_to_fibonacci_worker(n):
-    # Connect to Fibonacci Worker
-    worker_ip = '127.0.0.1'  # Worker server IP (adjust as needed)
-    worker_port = 9090
+    # Connect to deployed Fibonacci Worker
+    worker_ip = 'worker-public-ip'  # Replace with Render-assigned IP or domain
+    worker_port = 12345             # Replace with Render-assigned port
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as worker_socket:
         worker_socket.connect((worker_ip, worker_port))
@@ -35,13 +35,13 @@ def send_to_fibonacci_worker(n):
     return result
 
 def start_server():
-    server_ip = '192.168.0.77'  # Updated to bind to your active interface
+    server_ip = '0.0.0.0'  # Bind to all interfaces
     server_port = 8080
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server_socket:
         server_socket.bind((server_ip, server_port))
         server_socket.listen(5)
-        print(f"Server is running on {server_ip}:{server_port} and listening for connections...")
+        print(f"Controller is running on {server_ip}:{server_port} and listening for connections...")
 
         while True:
             client_socket, addr = server_socket.accept()
