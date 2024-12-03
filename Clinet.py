@@ -1,7 +1,8 @@
 import socket
 
-server_ip = "216.12.56.78"  # Replace with your server's IP address
-server_port = 9090
+# Replace with your Render-assigned server IP or domain
+server_ip = "your-app-name.onrender.com"  # Use the Render-provided domain
+server_port = 12345  # Replace with the assigned port
 
 # Connect to the server
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
