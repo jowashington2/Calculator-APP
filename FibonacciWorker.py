@@ -3,15 +3,6 @@ import threading
 import tkinter as tk
 from tkinter import scrolledtext, messagebox
 
-# Fibonacci calculation
-def fibonacci_sum(n):
-    a, b = 0, 1
-    total = 0
-    for _ in range(n):
-        total += a
-        a, b = b, a + b
-    return total
-
 # Function to send a Fibonacci task to a server
 def connect_to_server(ip, port, n, gui_log):
     try:
@@ -20,7 +11,7 @@ def connect_to_server(ip, port, n, gui_log):
             s.connect((ip, port))
             s.sendall(str(n).encode())  # Send the Fibonacci task (number n)
             result = s.recv(1024).decode()  # Receive the result
-            gui_log.insert(tk.END, f"Sent task to server {ip}:{port} - Fibonacci sum result: {result}\n")
+            gui_log.insert(tk.END, f"Sent task to server {ip}:{port} - Result: {result}\n")
             gui_log.see(tk.END)
     except Exception as e:
         gui_log.insert(tk.END, f"Failed to connect to server {ip}:{port}. Error: {str(e)}\n")
@@ -44,14 +35,14 @@ def start_gui():
 
     # Server IP address and port entry
     tk.Label(connection_frame, text="Server IP:").grid(row=0, column=0)
-    server_ip_entry = tk.Entry(connection_frame, width=20)
+    server_ip_entry = tk.Entry(connection_frame, width=30)
     server_ip_entry.grid(row=0, column=1)
-    server_ip_entry.insert(tk.END, '127.0.0.1')  # Default IP address
+    server_ip_entry.insert(tk.END, 'calculator-app-1.onrender.com')  # Default Render domain
 
     tk.Label(connection_frame, text="Server Port:").grid(row=1, column=0)
-    server_port_entry = tk.Entry(connection_frame, width=20)
+    server_port_entry = tk.Entry(connection_frame, width=10)
     server_port_entry.grid(row=1, column=1)
-    server_port_entry.insert(tk.END, '9090')  # Default port
+    server_port_entry.insert(tk.END, '12345')  # Replace with your Render server's assigned port
 
     tk.Label(connection_frame, text="Enter n for Fibonacci sum:").grid(row=2, column=0)
     number_entry = tk.Entry(connection_frame, width=20)
@@ -66,7 +57,7 @@ def start_gui():
             if n <= 0:
                 messagebox.showerror("Invalid Input", "Please enter a positive integer.")
                 return
-            gui_log.insert(tk.END, f"Connecting to server {ip}:{port} with task to calculate Fibonacci sum for n={n}...\n")
+            gui_log.insert(tk.END, f"Connecting to server {ip}:{port} for n={n}...\n")
             gui_log.see(tk.END)
             threading.Thread(target=connect_to_server, args=(ip, port, n, gui_log), daemon=True).start()
         except ValueError:
