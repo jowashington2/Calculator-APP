@@ -51,6 +51,6 @@ def start_server(ip, port):
 
 # Main function to run the server
 if __name__ == "__main__":
-    server_ip = "127.0.0.1"  # Listen on all available network interfaces
+    server_ip = "0.0.0.0"  # Allow access from any IP address
     server_port = 9090      # The port on which the server will listen
     start_server(server_ip, server_port)
