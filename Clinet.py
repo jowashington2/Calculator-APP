@@ -62,3 +62,6 @@ if __name__ == "__main__":
     # Start the socket server in a separate thread
     threading.Thread(target=start_socket_server, daemon=True).start()
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+    request = {"operation": "add", "x": 10, "y": 5}
+    response = send_request(request)
+    print("Response:", response)
