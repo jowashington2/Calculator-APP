@@ -1,6 +1,9 @@
 from flask import Flask, render_template, request
 import socket
 import time
+import os
+print("Current working directory:", os.getcwd())
+print("Templates directory path:", os.path.join(os.getcwd(), "templates"))
 
 app = Flask(__name__)
 
