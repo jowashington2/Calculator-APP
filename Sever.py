@@ -1,5 +1,6 @@
 import socket
 import threading
+import os
 
 # Fibonacci calculation function
 def fibonacci_sum(n):
@@ -52,5 +53,5 @@ def start_server(ip, port):
 # Main function to run the server
 if __name__ == "__main__":
     server_ip = "0.0.0.0"  # Allow access from any IP address
-    server_port = 9090      # The port on which the server will listen
+    server_port = int(os.environ.get("PORT", 9090))
     start_server(server_ip, server_port)
