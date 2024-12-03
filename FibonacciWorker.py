@@ -3,6 +3,7 @@ import threading
 import tkinter as tk
 from tkinter import scrolledtext, messagebox
 
+
 # Function to send a Fibonacci task to a server
 def connect_to_server(ip, port, n, gui_log):
     try:
@@ -38,6 +39,9 @@ def start_gui():
     server_ip_entry = tk.Entry(connection_frame, width=30)
     server_ip_entry.grid(row=0, column=1)
     server_ip_entry.insert(tk.END, 'calculator-app-1.onrender.com')  # Default Render domain
+    worker_ip = "calculator-app-1.onrender.com"  # Render public domain
+    worker_port = 10000  # Replace with Render's assigned port
+
 
     tk.Label(connection_frame, text="Server Port:").grid(row=1, column=0)
     server_port_entry = tk.Entry(connection_frame, width=10)
